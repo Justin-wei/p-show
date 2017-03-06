@@ -11,3 +11,4 @@ libraryDependencies ++= Seq(
   cache,
   javaWs
 )
+unmanagedResourceDirectories in Assets += baseDirectory.value / "node_modules"
