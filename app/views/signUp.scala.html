@@ -1,26 +1,21 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
 
 @*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
 @main("Welcome to Play") {
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-8 center">
             <form>
-                <h2>Log in</h2>
+                <h2>Sign up</h2>
                 <label for="username" class="sr-only">User Name</label>
                 <input type="text" id="username" class="form-control" placeholder="User Name" required autofocus>
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
             </form>
-            <button class="btn  btn-link" onclick="location.href = '/sign_up'">Sign Up</button>
+            <button class="btn  btn-link" onclick="location.href = '/'">Sign In</button>
         </div>
     </div>
 }
