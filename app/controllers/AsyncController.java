@@ -1,8 +1,11 @@
 package controllers;
 
+import akka.UserActor;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import play.*;
 import play.mvc.*;
+import scala.compat.java8.FutureConverters;
 import scala.concurrent.ExecutionContextExecutor;
 import scala.concurrent.duration.Duration;
 
@@ -29,11 +32,15 @@ public class AsyncController extends Controller {
 
     private final ActorSystem actorSystem;
     private final ExecutionContextExecutor exec;
+    private ActorRef userActor;
+
+
 
     @Inject
-    public AsyncController(ActorSystem actorSystem, ExecutionContextExecutor exec) {
-      this.actorSystem = actorSystem;
-      this.exec = exec;
+    public AsyncController(ActorSystem actorSystem, ExecutionContextExecutor exec, @Named("userActor") ActorRef userActor) {
+        this.actorSystem = actorSystem;
+        this.exec = exec;
+        this.userActor = userActor;
     }
 
     /**

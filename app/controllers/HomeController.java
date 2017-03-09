@@ -3,6 +3,7 @@ package controllers;
 import play.mvc.*;
 
 import views.html.*;
+import views.html.personal.personal;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -22,5 +23,9 @@ public class HomeController extends Controller {
 
     public Result signUp() {
         return ok(signUp.render());
+    }
+
+    public Result newPost() {
+        return ok(personal.render());
     }
 }

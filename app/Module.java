@@ -1,9 +1,13 @@
+import akka.UserActor;
 import com.google.inject.AbstractModule;
 import java.time.Clock;
 
+import play.Play;
+import play.libs.akka.AkkaGuiceSupport;
 import services.ApplicationTimer;
 import services.AtomicCounter;
 import services.Counter;
+import uk.co.panaxiom.playjongo.PlayJongo;
 
 /**
  * This class is a Guice module that tells Guice how to bind several
@@ -15,7 +19,7 @@ import services.Counter;
  * adding `play.modules.enabled` settings to the `application.conf`
  * configuration file.
  */
-public class Module extends AbstractModule {
+public class Module extends AbstractModule implements AkkaGuiceSupport {
 
     @Override
     public void configure() {
@@ -26,6 +30,8 @@ public class Module extends AbstractModule {
         bind(ApplicationTimer.class).asEagerSingleton();
         // Set AtomicCounter as the implementation for Counter.
         bind(Counter.class).to(AtomicCounter.class);
+
+        bindActor(UserActor.class, "userActor");
     }
 
 }
