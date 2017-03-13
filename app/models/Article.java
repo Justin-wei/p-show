@@ -16,4 +16,5 @@ public class Article implements Serializable {
     public String tag;
     public String articleIntroduction;
     public String articleText;
+    public String articleHtml;
 }

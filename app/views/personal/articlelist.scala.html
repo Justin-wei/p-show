@@ -1,0 +1,19 @@
+@import views.html.personal.personal
+@*
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@personal{
+    <div class="card text-center col-xs-10 col-sm-12 col-md-10">
+        <div class="card-header">
+            Featured
+        </div>
+        <div class="card-block">
+            <h4 class="card-title">Special title treatment</h4>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="@routes.HomeController.article" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+}
+
