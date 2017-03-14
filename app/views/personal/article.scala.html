@@ -1,38 +1,10 @@
 @import views.html.personal.personal
-@(article:Article)
+@(article:Html)
 @*
 * Call the `main` template with two arguments. The first
 * argument is a `String` with the title of the page, the second
 * argument is an `Html` object containing the body of the page.
 *@
 @personal{
-    <script src="@routes.Assets.versioned("node_modules/showdown/dist/showdown.js")" type="text/javascript"></script>
-
-    @helper.form(action = routes.HomeController.saveArticle, 'id -> "article") {
-        <div>
-            <div id="result" name="result">@article.articleHtml</div>
-        </div>
-
-        <div>
-            <textarea id="content" name="content" style="height:400px;width:600px;" onkeyup="compile()">@article.articleText</textarea>
-        </div>
-        <button class="btn  btn-link" type="submit">Sign Up</button>
-    }
-
-
-    <script type='text/javascript'>
-
-compile();
-            function compile(){
-
-	               var text = document.getElementById("content").value;
-	               @article.articleText=text;
-	               var converter =  new showdown.Converter();
-	              var html = converter.makeHtml(text);
-	              document.getElementById("result").innerHTML = html;
-	              @article.articleHtml=html;
-}
-
-     </script>
-
+    @article
 }

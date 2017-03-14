@@ -1,0 +1,52 @@
+@import views.html.personal.personal
+@import play.data.Form
+@(article: Form[Article])
+@*
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@personal {
+
+
+    @helper.form(action = routes.HomeController.saveArticle, 'id -> "article") {
+        <div class="row">
+            <div class="col-xs-10 col-sm-10 col-md-10">
+                @helper.inputText(article.apply("articleTitle"))
+
+            </div>
+            <div class="text-center col-xs-2 col-sm-2 col-md-2">
+                <button type="submit" class="btn btn-primary">Save article</button>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6 form-control">
+                @helper.textarea(article.apply("articleText"),'id -> "content",'onkeyup -> "compile()")
+            </div>
+
+            <div style="display: none">
+                @helper.textarea(article.apply("articleHtml"),'id -> "result",'display -> "none")
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6 form-control" id="resultForShow">
+                @article.get().articleText
+            </div>
+        </div>
+    }
+
+
+    <script src="@routes.Assets.versioned("node_modules/showdown/dist/showdown.js")" type="text/javascript"></script>
+    <script type='text/javascript'>
+
+compile();
+            function compile(){
+
+	               var text = document.getElementById("content").value;
+	               var converter =  new showdown.Converter();
+	              var html = converter.makeHtml(text);
+	              document.getElementById("result").innerHTML = html;
+	              document.getElementById("resultForShow").innerHTML = html;
+}
+
+     </script>
+
+}

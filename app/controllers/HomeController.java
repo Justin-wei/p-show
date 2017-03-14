@@ -2,43 +2,34 @@ package controllers;
 
 import models.Article;
 import org.jongo.MongoCollection;
-import org.jongo.MongoCursor;
-import play.Logger;
-import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.*;
 
+import play.twirl.api.Html;
 import uk.co.panaxiom.playjongo.PlayJongo;
 import views.html.*;
 import views.html.personal.article;
-import views.html.personal.articlelist;
-import views.html.personal.personal;
+import views.html.personal.articleEdit;
+import views.html.personal.articleList;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
 public class HomeController extends Controller {
-        private PlayJongo playJongo;
-        private FormFactory formFactory;
-
-        private Article at;
-    private String articleHtml = "";
-private Form<Article> userForm;
-        Map<String,String> anyData = new HashMap<>();
+    private PlayJongo playJongo;
+    private FormFactory formFactory;
 
     @Inject
-    public HomeController(PlayJongo playJongo,FormFactory formFactory ) {
+    public HomeController(PlayJongo playJongo, FormFactory formFactory) {
 
-         this.playJongo = playJongo;
+        this.playJongo = playJongo;
 
-         this.formFactory = formFactory;
+        this.formFactory = formFactory;
     }
+
     /**
      * An action that renders an HTML page with a welcome message.
      * The configuration in the <code>routes</code> file means that
@@ -54,20 +45,33 @@ private Form<Article> userForm;
     }
 
     public Result newPost() {
-        return ok(articlelist.render());
+        return ok(articleList.render());
     }
 
     public Result article() {
 //            MongoCursor<Article> all = getArticleMongo().find().as(Article.class);
-        at = getArticleMongo().findOne().as(Article.class);
-            if (at==null){
-                at = new Article();
-                at.articleHtml="";
-                at.articleName="";
-            }
 
-            Logger.debug("111111111"+at);
-        return ok(article.render(at));
+        Article articleObject = getArticleMongo().findOne().as(Article.class);
+        if (articleObject == null) {
+            articleObject = new Article();
+            articleObject.articleHtml = "";
+            articleObject.articleTitle = "";
+        }
+        return ok(article.render(Html.apply(articleObject.articleHtml)));
+    }
+
+    public Result articleEdit() {
+//            MongoCursor<Article> all = getArticleMongo().find().as(Article.class);
+
+        Article articleObject = getArticleMongo().findOne().as(Article.class);
+        if (articleObject == null) {
+            articleObject = new Article();
+            articleObject.articleHtml = "";
+            articleObject.articleTitle = "";
+        }
+        Form<Article> articleForm = formFactory.form(Article.class);
+        articleForm = articleForm.fill(articleObject);
+        return ok(articleEdit.render(articleForm));
     }
 
     public MongoCollection getArticleMongo() {
@@ -79,19 +83,13 @@ private Form<Article> userForm;
     }
 
 
-    public Result saveArticle(){
+    public Result saveArticle() {
 
-        DynamicForm dynamicForm =formFactory.form().bindFromRequest();
-//        Article article = new Article();
-
-        at.articleName="1";
-        at.publishedDate="1";
-        at.tag="1";
-        at.articleIntroduction="1";
-//        at.articleText = dynamicForm.get("content");
-//        at.articleHtml = dynamicForm.get("result");
-        Logger.debug("atarticleHtml"+at.articleHtml);
-        insert(at);
+//        DynamicForm dynamicForm =formFactory.form().bindFromRequest();
+        Article article = formFactory.form(Article.class).bindFromRequest().get();
+//        article.articleText = dynamicForm.get("content");
+//        article.articleHtml = dynamicForm.get("result");
+        insert(article);
         return ok();
     }
 }

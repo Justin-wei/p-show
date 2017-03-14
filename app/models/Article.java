@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Article implements Serializable {
     @JsonProperty("_id")
     public ObjectId id;
-    public String articleName;
+    public String articleTitle;
     public String publishedDate;
     public String tag;
     public String articleIntroduction;
